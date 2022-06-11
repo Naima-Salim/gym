@@ -33,17 +33,28 @@ class LoginActivity : AppCompatActivity() {
             val intent=Intent(this,SignUpActivity::class.java)
             startActivity(intent)
         }
+        btnLogin.setOnClickListener {
+            val intent=Intent(this,HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun validateLogin(){
         var email=etEmail.text.toString()
         var password=etPassword.text.toString()
+        var error=false
 
         if (email.isBlank()) {
             tilEmail.error = getString(R.string.email_required)
+            error=true
         }
         if (password.isBlank()) {
             tilPassword.error = getString(R.string.password_required)
+            error=true
+        }
+        if(error!=true){
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
 
 

@@ -55,8 +55,10 @@ class SignUpActivity : AppCompatActivity() {
            var password=etPassword.text.toString()
            var confirm=etconfirm.text.toString()
 
+
            if (firstname.isBlank()) {
                tilFirstname.error = getString(R.string.enter_firstname)
+
            }
            if (lastname.isBlank()) {
                tilSecondName.error = getString(R.string.enter_lastname)
@@ -64,12 +66,13 @@ class SignUpActivity : AppCompatActivity() {
            if (email.isBlank()) {
                tilemail.error = getString(R.string.email_required)
            }
-           if (password.isBlank()) {
-              tilPassword.error = getString(R.string.password_required)
+           if (password.length<8) {
+              tilPassword.error = "only 8 characters are accepted"
            }
-           if (confirm.isBlank()) {
-              tilconfirm.error = getString(R.string.confirm_password)
+           if (confirm.length>8) {
+              tilconfirm.error = "password does not match"
            }
+
        }
 
     }
