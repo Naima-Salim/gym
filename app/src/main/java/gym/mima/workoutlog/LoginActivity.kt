@@ -7,56 +7,40 @@ import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import gym.mima.workoutlog.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var btnLogin:Button
-    lateinit var tvSignup:TextView
-    lateinit var tilEmail:TextInputLayout
-    lateinit var tilPassword:TextInputLayout
-    lateinit var etEmail:TextInputEditText
-    lateinit var etPassword:TextInputEditText
+    lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        btnLogin=findViewById(R.id.btnLogin)
-        tvSignup=findViewById(R.id.tvSignup)
-        tilEmail=findViewById(R.id.tilEmail)
-        tilPassword=findViewById(R.id.tilPassword)
-        etEmail=findViewById(R.id.etEmail)
-        etPassword=findViewById(R.id.etPassword)
-        btnLogin.setOnClickListener {
-            validateLogin()
+        binding=ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        }
-        tvSignup.setOnClickListener {
-            val intent=Intent(this,SignUpActivity::class.java)
+        binding.btnLogin.setOnClickListener {
+            val intent=Intent(this, HomeActivity::class.java)
             startActivity(intent)
-        }
-        btnLogin.setOnClickListener {
-            val intent=Intent(this,HomeActivity::class.java)
-            startActivity(intent)
+            validateLogin()
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
-
     fun validateLogin(){
-        var email=etEmail.text.toString()
-        var password=etPassword.text.toString()
+        var email=binding.etEmail.text.toString()
+        var password=binding.etPassword.text.toString()
         var error=false
 
         if (email.isBlank()) {
-            tilEmail.error = getString(R.string.email_required)
+            binding.tilEmail.error = getString(R.string.email_required)
             error=true
         }
         if (password.isBlank()) {
-            tilPassword.error = getString(R.string.password_required)
+            binding.tilPassword.error = getString(R.string.password_required)
             error=true
         }
         if(!error){
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
-
-
     }
 }
