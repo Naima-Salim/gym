@@ -1,12 +1,9 @@
-package gym.mima.workoutlog
+package gym.mima.workoutlog.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import gym.mima.workoutlog.R
 import gym.mima.workoutlog.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -18,10 +15,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            val intent=Intent(this, HomeActivity::class.java)
+            val intent=Intent(this, SignUpActivity::class.java)
             startActivity(intent)
             validateLogin()
-            startActivity(Intent(this, HomeActivity::class.java))
+//            startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
     }
@@ -39,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
             error=true
         }
         if(!error){
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
             finish()
         }
     }

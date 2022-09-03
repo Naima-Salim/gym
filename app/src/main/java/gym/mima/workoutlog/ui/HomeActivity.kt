@@ -1,9 +1,10 @@
-package gym.mima.workoutlog
+package gym.mima.workoutlog.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import gym.mima.workoutlog.R
 
 class HomeActivity : AppCompatActivity() {
     lateinit var fcvHome:FragmentContainerView
@@ -24,15 +25,15 @@ class HomeActivity : AppCompatActivity() {
     fun setupBottomNav(){
         bnvHome.setOnItemSelectedListener { item->
             when(item.itemId){
-                R.id.plan->{
+                R.id.plan ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fcvHome, PlanFragment()).commit()
                     true
                 }
-                R.id.track->{
+                R.id.track ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fcvHome, TrackFragment()).commit()
                     true
                 }
-                R.id.profile->{
+                R.id.profile ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fcvHome, ProfileFragment()).commit()
                     true
                 }

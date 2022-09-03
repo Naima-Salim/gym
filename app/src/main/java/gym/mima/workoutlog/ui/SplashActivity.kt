@@ -1,4 +1,4 @@
-package gym.mima.workoutlog
+package gym.mima.workoutlog.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(Intent(this,LoginActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 }
