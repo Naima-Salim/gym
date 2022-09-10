@@ -71,7 +71,9 @@ class SignUpActivity : AppCompatActivity() {
                 if (response.isSuccessful){
                     var message = response.body()?.message
                     Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
-                    //intent to login
+                    startActivity(Intent(baseContext, LoginActivity::class.java))
+                    startActivity(Intent(baseContext, HomeActivity::class.java))
+
                 }else{
                     val error=response.errorBody()?.string()
                     Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
