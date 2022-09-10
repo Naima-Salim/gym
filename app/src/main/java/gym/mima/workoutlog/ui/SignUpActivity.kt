@@ -4,18 +4,22 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import gym.mima.workoutlog.R
 import gym.mima.workoutlog.databinding.ActivitySignUpBinding
 import gym.mima.workoutlog.models.RegisterRequest
 import gym.mima.workoutlog.models.RegisterResponse
-import gym.mima.workoutlog.retrofit.ApiClient
-import gym.mima.workoutlog.retrofit.ApiInterface
+import gym.mima.workoutlog.api.ApiClient
+import gym.mima.workoutlog.api.ApiInterface
+import gym.mima.workoutlog.viewmodel.UserViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     lateinit var binding: ActivitySignUpBinding
+    val userViewModel: UserViewModel by viewModels()
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -58,32 +62,46 @@ class SignUpActivity : AppCompatActivity() {
 
            }
             val registerRequest = RegisterRequest(firstname,lastname,email, phonenumber,password)
-            makeRegistrationRequest(registerRequest)
+//            makeRegistrationRequest(registerRequest)
 
        }
 
-    fun makeRegistrationRequest(registerRequest: RegisterRequest){
-        var apiClient = ApiClient.buildApiClient(ApiInterface::class.java)
-        var request = apiClient.registerUser(registerRequest)
+//    suspend fun makeRegistrationRequest(registerRequest: RegisterRequest){
+//        var apiClient = ApiClient.buildApiClient(ApiInterface::class.java)
+//        var request = apiClient.registerUser(registerRequest)
+//
+//        request.enqueue(object : Callback<RegisterResponse>{
+//            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+//                if (response.isSuccessful){
+//                    var message = response.body()?.message
+//                    Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+//                    startActivity(Intent(baseContext, LoginActivity::class.java))
+//                    startActivity(Intent(baseContext, HomeActivity::class.java))
+//
+//                }else{
+//                    val error=response.errorBody()?.string()
+//                    Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+//                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
+//            }
+//
+//        })
+//    }
 
-        request.enqueue(object : Callback<RegisterResponse>{
-            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                if (response.isSuccessful){
-                    var message = response.body()?.message
-                    Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
-                    startActivity(Intent(baseContext, LoginActivity::class.java))
-                    startActivity(Intent(baseContext, HomeActivity::class.java))
+    override fun onResume() {
+        super.onResume()
+        userViewModel.registerResponseLiveData.observe(this, Observer{
+                signupResponse->
+            Toast.makeText(baseContext, signupResponse.message, Toast.LENGTH_LONG).show()
+            startActivity(Intent(baseContext, LoginActivity::class.java))
 
-                }else{
-                    val error=response.errorBody()?.string()
-                    Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
-            }
-
+        })
+        userViewModel.registerErrorLiveData.observe(this, Observer {
+            signupError->
+            Toast.makeText(baseContext,signupError,Toast.LENGTH_LONG).show()
         })
     }
     }

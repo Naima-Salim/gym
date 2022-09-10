@@ -1,4 +1,4 @@
-package gym.mima.workoutlog.retrofit
+package gym.mima.workoutlog.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
