@@ -74,32 +74,10 @@ class LoginActivity : AppCompatActivity() {
             userViewModel.loginUser(loginRequest)
         }
     }
-    //    fun makeLoginRequest(loginRequest:LoginRequest){
-//        var apiClient = ApiClient.buildApiClient(ApiInterface::class.java)
-//        val request = apiClient.login(loginRequest)
-//
-//        request.enqueue(object : Callback<LoginResponse> {
-//            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-//                binding.pbLogin.visibility = View.GONE
-//                if (response.isSuccessful){
-//                    val loginResponse = response.body()
-//            }
-//                else{
-//                    val error = response.errorBody()?.string()
-//                }
-//
-//
-//            }
-//            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-//                binding.pbLogin.visibility = View.GONE
-//                Toast.makeText(baseContext,t.message,Toast.LENGTH_LONG).show()
-//            }
-//
-//
-//        })
-//    }
+
     fun saveLoginDetails(loginResponse:LoginResponse){
         val editor = sharedPrefs.edit()
+        val token = "Bearer ${loginResponse.accessToken}"
         editor.putString("ACCESS_TOKEN", loginResponse.accessToken)
         editor.putString("USER_ID", loginResponse.userId)
         editor.putString("PROFILE_ID", loginResponse.profileId)

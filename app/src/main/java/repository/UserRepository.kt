@@ -2,9 +2,7 @@ package repository
 
 import gym.mima.workoutlog.api.ApiClient
 import gym.mima.workoutlog.api.ApiInterface
-import gym.mima.workoutlog.models.LoginRequest
-import gym.mima.workoutlog.models.RegisterRequest
-import gym.mima.workoutlog.models.RegisterResponse
+import gym.mima.workoutlog.models.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -19,6 +17,11 @@ class UserRepository {
     suspend fun registerUser(registerRequest: RegisterRequest):Response<RegisterResponse>
     = withContext(Dispatchers.IO){
         val response = apiClient.registerUser(registerRequest)
+        return@withContext response
+    }
+    suspend fun profileUser(profileRequest: ProfileRequest):Response<ProfileResponse>
+    = withContext(Dispatchers.IO){
+        val  response = apiClient.profile(profileRequest)
         return@withContext response
     }
 }

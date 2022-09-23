@@ -3,10 +3,7 @@ package gym.mima.workoutlog.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import gym.mima.workoutlog.models.LoginRequest
-import gym.mima.workoutlog.models.LoginResponse
-import gym.mima.workoutlog.models.RegisterRequest
-import gym.mima.workoutlog.models.RegisterResponse
+import gym.mima.workoutlog.models.*
 import kotlinx.coroutines.launch
 import repository.UserRepository
 
@@ -16,6 +13,9 @@ class UserViewModel: ViewModel() {
     val loginErrorLiveData = MutableLiveData<String?>()
     var registerResponseLiveData = MutableLiveData<RegisterResponse>()
     val registerErrorLiveData = MutableLiveData<String?>()
+    var profileResponseLiveData = MutableLiveData<ProfileResponse>()
+    val profileErrorLiveData = MutableLiveData<String?>()
+
 
     fun loginUser(loginRequest: LoginRequest){
         viewModelScope.launch {
@@ -38,6 +38,20 @@ class UserViewModel: ViewModel() {
                 registerResponseLiveData.postValue(response.body())
             }
         }
+    }
+
+    fun profileUser(profileRequest: ProfileRequest){
+        viewModelScope.launch {
+            val response=userRepository.profileUser(profileRequest)
+            if (response.isSuccessful){
+                profileResponseLiveData.postValue(response.body())
+
+            }else{
+                val error=response.errorBody()?.string()
+                profileErrorLiveData.postValue(error)
+            }
+        }
+
     }
 
 
